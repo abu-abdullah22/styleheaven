@@ -15,7 +15,7 @@ const Banner = () => {
             Welcome to StyleHeaven — where fashion meets elegance.
             Discover premium styles crafted just for you!
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <a href='#products' className="btn btn-primary">Get Started</a>
         </div>
       </div>
     </div>
