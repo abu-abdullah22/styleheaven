@@ -16,7 +16,7 @@ const Details = () => {
     return (
         <div  >
             <Navbar />
-            <div className="hero bg-center min-h-[calc(100vh-116px)] 
+            <div className="hero bg-center min-h-[calc(100vh-52px)] 
     " style={{
                 backgroundImage: `url(${banner})`,
               }}>

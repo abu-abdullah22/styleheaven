@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
-        <div className="navbar bg-transparent container mx-auto mt-4 p-4 mb-4 rounded-2xl sticky">
+        <div className="navbar rounded-2xl bg-base-200 px-8 mt-2 z-50 fixed">
             <div className="flex-1">
                 <Link to={'/'} className="btn btn-primary text-xl">Style Heaven</Link>
             </div>
