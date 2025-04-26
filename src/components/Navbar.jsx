@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
     return (
-        <div className="navbar bg-base-100 shadow-sm container mx-auto mt-4">
+        <div className="navbar bg-transparent container mx-auto mt-4 p-4 mb-4 rounded-2xl sticky">
             <div className="flex-1">
-                <a className="btn btn-primary text-xl">Style Heaven</a>
+                <Link to={'/'} className="btn btn-primary text-xl">Style Heaven</Link>
             </div>
             <div className="flex-none">
                 <div className="dropdown dropdown-end">
