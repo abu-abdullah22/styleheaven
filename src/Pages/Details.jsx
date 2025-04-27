@@ -6,10 +6,12 @@ import { useEffect } from "react";
 import { fetchProducts } from "../features/Products/productsSlice";
 import { useParams } from "react-router-dom";
 import { addtoCart } from "../features/CartProducts/cartProductsSlice";
+import toast from "react-hot-toast";
 
 const Details = () => {
     const { id } = useParams();
     const { products, isLoading, isError, error } = useSelector(state => state.products);
+    const {cartProducts} = useSelector(state => state.cart) ;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,7 +21,15 @@ const Details = () => {
     const product = products.find(product => product.unique_id === id);
 
     const handleCart = () => {
-        dispatch(addtoCart(product))
+        const already = cartProducts.find(i=> i.unique_id === product.unique_id) ;
+
+        if(already) {
+            toast.error('Product already added to cart!')
+        } else {
+            dispatch(addtoCart(product))
+            toast.success('Added to cart successfully!')
+        }
+    
     }
 
     let content;
