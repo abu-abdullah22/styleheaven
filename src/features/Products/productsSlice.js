@@ -8,6 +8,7 @@ const initialState = {
 }
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
     const products = await getProducts() ;
+    localStorage.setItem('products', JSON.stringify(products))
     return products ;
 })
 

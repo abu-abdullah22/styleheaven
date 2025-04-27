@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import banner from '../assets/white.jpg'
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchProducts } from "../features/Products/productsSlice";
 import { useParams } from "react-router-dom";
 import { addtoCart } from "../features/CartProducts/cartProductsSlice";
@@ -13,14 +13,28 @@ const Details = () => {
     const { products, isLoading, isError, error } = useSelector(state => state.products);
     const {cartProducts} = useSelector(state => state.cart) ;
     const dispatch = useDispatch();
+    const [product, setProduct] = useState() ;
+
+    useEffect(()=>{
+        const localProducts = JSON.parse(localStorage.getItem('products'));
+        if(localProducts && products.length>0){
+            const foundProduct = products.find(i=> i.unique_id === id) ;
+            setProduct(foundProduct || null) ;
+        } else {
+            dispatch(fetchProducts())
+        }
+    },[products,id, dispatch]) 
 
     useEffect(() => {
-        dispatch(fetchProducts())
-    }, [dispatch]);
-
-    const product = products.find(product => product.unique_id === id);
+        if (products.length > 0) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+    }, [products]);
+    
 
     const handleCart = () => {
+        if(!product) return ;
+
         const already = cartProducts.find(i=> i.unique_id === product.unique_id) ;
 
         if(already) {
@@ -34,7 +48,7 @@ const Details = () => {
 
     let content;
 
-    if (isLoading) {
+    if (isLoading && !product) {
         content = <span className="loading loading-dots loading-xl flex-col mt-28 "></span>
     }
 
@@ -45,16 +59,17 @@ const Details = () => {
             <div className="alert alert-info">
                 <span>{error}</span>
             </div>
-
     }
 
 
-    if (!isLoading && !isError && products.length === 0 && !product) {
+    if ( !isLoading && !isError && !product) {
         content = <h1 className="min-h-[calc(100vh-52px)]">No Products Found!</h1>
     }
 
+    
 
-    if (!isLoading && !isError && products.length > 0 && product) {
+
+    if (!isLoading && !isError && product) {
         const { name, image, short_desc, price, discount_date, discount_amount, category, stock, code } = product;
 
         content =
@@ -77,13 +92,13 @@ const Details = () => {
                             <div className="badge badge-outline p-4 font-bold">Normal Price : {price} taka</div>
                             {discount_date ? <div className="badge badge-outline p-4 font-bold">Discount Date : {discount_date}</div> : ''}
                             {discount_amount ? <div className="badge badge-outline p-4 font-bold">
-                                Discounted Price : {`${price}` - `${discount_amount}`} taka
+                                Discounted Price : {price - discount_amount} taka
                             </div> : ''}
                         </div>
 
                         <button className="btn btn-neutral btn-dash mt-8 mr-5 font-bold">{code}</button>
 
-                        <button className="btn btn-neutral btn-dash mt-8 mr-5 font-bold">{category.name}</button>
+                        <button className="btn btn-neutral btn-dash mt-8 mr-5 font-bold">{category?.name}</button>
 
                         <button className="btn btn-neutral btn-dash mt-8 mr-5 font-bold">Stock : {stock}</button>
 
