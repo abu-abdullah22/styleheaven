@@ -18,11 +18,11 @@ const Products = () => {
     content = <span className="loading loading-dots loading-xl"></span>
   }
   if (!isLoading && isError) {
-    content = <div className="toast toast-top toast-center">
+    content = 
       <div className="alert alert-info">
         <span>{error}</span>
       </div>
-    </div>
+    
   }
   if (!isLoading && !isError && products.length === 0) {
     content = <h1>No Products Found!</h1>

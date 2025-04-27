@@ -8,15 +8,15 @@ const ProductCard = ({ product }) => {
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">
-          {name}
+        <h2 className="card-title font-bold">
+          {name.toUpperCase()}
         </h2>
       
         <div className="card-actions">
-          <div className="badge badge-outline">Normal Price : {price}</div>
-          {discount_date ? <div className="badge badge-outline">Discount Date : {discount_date}</div> : ''}
-          {discount_amount ? <div className="badge badge-outline">
-              Discounted Price : {`${price}`- `${discount_amount}`}
+          <div className="badge badge-outline font-bold p-4">Normal Price : {price} taka</div>
+          {discount_date ? <div className="badge badge-outline font-bold p-4">Discount Date : {discount_date}</div> : ''}
+          {discount_amount ? <div className="badge badge-outline font-bold p-4">
+              Discounted Price : {`${price}`- `${discount_amount}`} taka
           </div> : ''}
         </div>
       </div>

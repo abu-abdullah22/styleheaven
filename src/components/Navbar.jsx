@@ -18,7 +18,7 @@ const Navbar = () => {
                         className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
                         <div className="card-body">
                             <div className="card-actions">
-                                <button className="btn btn-primary btn-block">View cart</button>
+                                <Link to={'/cart'} className="btn btn-primary btn-block">View cart</Link>
                             </div>
                         </div>
                     </div>
