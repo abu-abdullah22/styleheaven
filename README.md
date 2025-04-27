@@ -1,6 +1,6 @@
 # StyleHeaven
 
-[**StyleHeaven**](https://github.com/abu-abdullah22/styleheaven) is a basic e-commerce store application built with modern web technologies. It fetches product data from an external API, manages the global state using Redux Toolkit, and follows best practices with a clean and organized code structure.
+[**StyleHeaven**](https://style-heaven-store.netlify.app/) is a basic e-commerce store application built with modern web technologies. It fetches product data from an external API, manages the global state using Redux Toolkit, and follows best practices with a clean and organized code structure.
 
 ## Features
 
