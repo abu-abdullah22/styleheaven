@@ -1,25 +1,50 @@
-import { useLoaderData, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import banner from '../assets/white.jpg'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProducts } from "../features/Products/productsSlice";
+import { useParams } from "react-router-dom";
 
 const Details = () => {
     const { id } = useParams();
+    const { products, isLoading, isError, error } = useSelector(state => state.products);
+    const dispatch = useDispatch();
 
-    const productsStorage = useLoaderData();
-    const products = productsStorage.data.data;
+    useEffect(() => {
+        dispatch(fetchProducts())
+    }, [dispatch]);
+
+    console.log(products);
 
     const product = products.find(product => product.unique_id === id);
+    console.log(product);
 
-    const { name, image, short_desc, price, discount_date, discount_amount, category} = product;
+    let content;
 
-    return (
-        <div  >
-            <Navbar />
+    if (isLoading) {
+        content = <span className="loading loading-dots loading-xl flex-col mt-28 "></span>
+    }
+    if (!isLoading && isError) {
+        content =
+            <div className="toast toast-top toast-center">
+                <div className="alert alert-info">
+                    <span>{error}</span>
+                </div>
+            </div>
+
+    }
+    if (!isLoading && !isError && products.length === 0 && !product) {
+        content = <h1 className="min-h-[calc(100vh-52px)]">No Products Found!</h1>
+    }
+    if (!isLoading && !isError && products.length > 0 && product) {
+        const { name, image, short_desc, price, discount_date, discount_amount, category } = product;
+
+        content =
             <div className="hero bg-center min-h-[calc(100vh-52px)] 
     " style={{
-                backgroundImage: `url(${banner})`,
-              }}>
+                    backgroundImage: `url(${banner})`,
+                }}>
                 <div className="hero-content flex-col lg:flex-row">
                     <img
                         src={`https://admin.refabry.com/storage/product/${image}`}
@@ -40,11 +65,19 @@ const Details = () => {
                         </div>
                         <button className="btn btn-neutral btn-dash mt-8">{category.name}</button>
 
-                     <div>
-                     <button className="btn btn-primary mt-8">Add to cart</button>
-                     </div>
+                        <div>
+                            <button className="btn btn-primary mt-8">Add to cart</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+    }
+
+    return (
+        <div >
+            <Navbar />
+            <div className="min-h-[calc(100vh-52px)]">
+                {content}
             </div>
             <Footer />
         </div>

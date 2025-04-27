@@ -9,7 +9,6 @@ const router = createBrowserRouter([
 {
   path: '/:id',
   element: <Details />,
-  loader : ()=> fetch(`https://admin.refabry.com/api/all/product/get`)
 }
 ]);
 
